@@ -1,3 +1,10 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+.main-color {
+  background-color: #001233;
+}
+.listItem {
+  list-style: none;
+  text-decoration: none;
+}
