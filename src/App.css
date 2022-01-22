@@ -1,10 +1,28 @@
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: 'Roboto', sans-serif;
+  background-color: #e9ecef;
 }
 .main-color {
   background-color: #001233;
 }
-.listItem {
-  list-style: none;
-  text-decoration: none;
+.text-color {
+  color: white;
+}
+.selected {
+  color: coral;
+}
+.jumbotron {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
+    url('/public/assets/images/coronavirus.jpeg');
+  background-position: bottom;
+  /* background-repeat: no-repeat; */
+  background-size: cover;
+  border-radius: 0%;
+}
+
+.btn-purple {
+  background-color: #658ef6;
 }

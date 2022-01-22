@@ -17,28 +17,36 @@ class MainNavbar extends Component {
     return (
       <div className='main-color'>
         <Navbar className='main-color mx-3 ' dark expand='md' full>
-          <NavbarBrand href='/' className='align-middle'>
+          <NavbarBrand href='/'>
             <h1>ZM</h1>
           </NavbarBrand>
           <NavbarToggler className='me-2' onClick={function noRefCheck() {}} />
           <Collapse navbar>
             <Nav className='mx-auto' navbar>
               <NavItem className='mx-2'>
-                <NavLink href='/'>Home</NavLink>
+                <NavLink href='/' className='text-white selected'>
+                  Home
+                </NavLink>
               </NavItem>
               <NavItem className='mx-2'>
-                <NavLink href='/'>About</NavLink>
+                <NavLink href='/' className='text-white'>
+                  About
+                </NavLink>
               </NavItem>
               <NavItem className='mx-2'>
-                <NavLink href='/'>Stats</NavLink>
+                <NavLink href='/' className='text-white'>
+                  Stats
+                </NavLink>
               </NavItem>
               <NavItem className='mx-2'>
-                <NavLink href='/'>Contact</NavLink>
+                <NavLink href='/' className='text-white'>
+                  Contact
+                </NavLink>
               </NavItem>
             </Nav>
             <NavbarText>
               <Button
-                class='btn btn-sm px-3 btn-register'
+                class='btn btn-sm px-3 btn-register btn-purple'
                 type='button'
                 data-toggle='modal'
                 data-target='#registerForm'
