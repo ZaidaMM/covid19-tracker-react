@@ -13,15 +13,31 @@ import {
 import Modal from 'reactstrap/lib/Modal';
 
 class MainNavbar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+
+    this.state = {
+      isOpen: false,
+    };
+  }
+
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
+  }
+
   render() {
     return (
       <div className='main-color'>
-        <Navbar className='main-color mx-3 ' dark expand='md' full>
+        <Navbar className='main-color mx-3' dark expand='md' full>
           <NavbarBrand href='/'>
             <h1>ZM</h1>
           </NavbarBrand>
-          <NavbarToggler className='me-2' onClick={function noRefCheck() {}} />
-          <Collapse navbar>
+          <NavbarToggler className='me-2' onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className='mx-auto' navbar>
               <NavItem className='mx-2'>
                 <NavLink href='/' className='text-white selected'>
