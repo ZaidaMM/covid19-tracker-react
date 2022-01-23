@@ -9,23 +9,37 @@ import {
   NavLink,
   NavbarText,
   Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  ButtonGroup,
 } from 'reactstrap';
-import Modal from 'reactstrap/lib/Modal';
 
 class MainNavbar extends Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
+    this.navToggle = this.navToggle.bind(this);
+    this.modalToggle = this.modalToggle.bind(this);
 
     this.state = {
       isOpen: false,
+      modal: false,
     };
   }
 
-  toggle() {
+  navToggle() {
     this.setState({
       isOpen: !this.state.isOpen,
+    });
+  }
+  modalToggle() {
+    this.setState({
+      modal: !this.state.modal,
     });
   }
 
@@ -34,9 +48,11 @@ class MainNavbar extends Component {
       <div className='main-color'>
         <Navbar className='main-color mx-3' dark expand='md' full>
           <NavbarBrand href='/'>
-            <h1>ZM</h1>
+            <span className='h2'>
+              <i>ZM</i>
+            </span>
           </NavbarBrand>
-          <NavbarToggler className='me-2' onClick={this.toggle} />
+          <NavbarToggler className='me-2' onClick={this.navToggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className='mx-auto' navbar>
               <NavItem className='mx-2'>
@@ -64,14 +80,40 @@ class MainNavbar extends Component {
               <Button
                 class='btn btn-sm px-3 btn-register btn-purple'
                 type='button'
-                data-toggle='modal'
-                data-target='#registerForm'
-                onClick={function noRefCheck() {}}
+                onClick={this.modalToggle}
               >
                 Register
               </Button>
             </NavbarText>
-            <Modal></Modal>
+            <Modal isOpen={this.state.modal} toggle={this.modalToggle}>
+              <ModalHeader>
+                <h5 className='lead'>Register for Updates</h5>
+              </ModalHeader>
+              <ModalBody>
+                <Form>
+                  <FormGroup>
+                    <Label for='name'>Name</Label>
+                    <Input
+                      id='name'
+                      type='text'
+                      placeholder='Enter your name...'
+                    ></Input>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for='email'>Email</Label>
+                    <Input
+                      id='email'
+                      type='email'
+                      placeholder='Enter your email...'
+                    ></Input>
+                  </FormGroup>
+                  <ButtonGroup>
+                    <Button>Cancel</Button>
+                    <Button color='primary'>Submit</Button>
+                  </ButtonGroup>
+                </Form>
+              </ModalBody>
+            </Modal>
           </Collapse>
         </Navbar>
       </div>
