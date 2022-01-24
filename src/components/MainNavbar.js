@@ -78,7 +78,7 @@ class MainNavbar extends Component {
             </Nav>
             <NavbarText>
               <Button
-                class='btn btn-sm px-3 btn-register btn-purple'
+                className='btn btn-sm px-3 btn-register btn-purple'
                 type='button'
                 onClick={this.modalToggle}
               >
