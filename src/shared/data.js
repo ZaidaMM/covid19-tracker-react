@@ -1,4 +1,4 @@
-export const DATA = [
+export const countries = [
   {
     updated: 1640560609578,
     country: 'Worldwide',
