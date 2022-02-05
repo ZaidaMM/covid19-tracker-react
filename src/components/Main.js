@@ -9,15 +9,22 @@ class Main extends Component {
 
     this.onCountryChange = this.onCountryChange.bind(this);
     this.state = {
-      value: 'Worldwide',
+      country: 'Worldwide',
     };
   }
 
   onCountryChange(event) {
-    this.setState({ value: event.target.value });
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    const stats = this.setState({
+      country: value,
+    });
+
+    console.log(value);
     event.preventDefault();
-    console.log(event.target.value);
   }
+
   render() {
     const countryList = countries.map((country) => {
       return <option key={country.countryInfo.iso2}>{country.country}</option>;
@@ -27,20 +34,19 @@ class Main extends Component {
       <div class='Main'>
         <div className='container py-3'>
           <h3 className=' text-center'>Coronavirus Data by Country</h3>
-          <div className='row'>
+          <div className='row align-items-baseline '>
             <div className='col-md-6'>
-              <h4 className='text-center mt-2 ' key={this.state.value}>
-                {this.state.value}
-              </h4>
+              <h4 className='text-center offset-md-3'>{this.state.country}</h4>
             </div>
             <Form className='col text-center'>
               <FormGroup className='py-3'>
                 <select
-                  value={this.state.value}
                   id='selectCountry'
                   name='selectCountry'
-                  className='col-7 mx-auto'
+                  className='col-7 mx-auto py-2'
                   onChange={this.onCountryChange}
+                  value={this.state.country}
+                  key={this.state.country}
                 >
                   {countryList}
                 </select>
@@ -48,7 +54,7 @@ class Main extends Component {
             </Form>
           </div>
 
-          <CountryCard />
+          <CountryCard country={this.state.country} />
         </div>
       </div>
     );

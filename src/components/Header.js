@@ -17,6 +17,7 @@ class Header extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+
     this.state = {
       isOpen: false,
     };
@@ -70,7 +71,6 @@ class Header extends Component {
               <Button
                 className='btn btn-sm px-3 btn-register btn-purple ml-5'
                 type='button'
-                onClick={this.modalToggle}
               >
                 Register
               </Button>
