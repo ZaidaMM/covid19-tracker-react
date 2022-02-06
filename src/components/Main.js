@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, FormGroup } from 'reactstrap';
 import { countries } from '../shared/data';
 import CountryCard from './CountryCard';
 
