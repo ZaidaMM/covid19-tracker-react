@@ -19,6 +19,7 @@ body {
 .btn-purple:hover {
   color: #007bff;
   background-color: white;
+  border: 1px solid #007bff;
   transform: scale(1);
 }
 .jumbotron {

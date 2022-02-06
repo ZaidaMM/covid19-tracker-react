@@ -13,6 +13,12 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
+  Form,
+  FormGroup,
+  InputGroup,
+  InputGroupAddon,
+  Label,
+  Input,
 } from 'reactstrap';
 
 class Header extends Component {
@@ -92,7 +98,37 @@ class Header extends Component {
           <ModalHeader toggle={this.toggleModal}>
             Subscribe for updates
           </ModalHeader>
-          <ModalBody>BODY</ModalBody>
+          <ModalBody>
+            <Form>
+              <InputGroup>
+                <InputGroupAddon addonType='prepend'>Name</InputGroupAddon>
+                <Input
+                  id='name'
+                  name='name'
+                  type='text'
+                  placeholder='Enter your name...'
+                />
+              </InputGroup>
+              <br />
+              <InputGroup>
+                <InputGroupAddon addonType='prepend'>Email</InputGroupAddon>
+                <Input
+                  id='email'
+                  name='email'
+                  type='email'
+                  placeholder='Enter your email...'
+                />
+              </InputGroup>
+              <br />
+              <InputGroup>
+                <InputGroupAddon>
+                  <Button type='submit' value='submit' className='btn-purple'>
+                    Submit
+                  </Button>
+                </InputGroupAddon>
+              </InputGroup>
+            </Form>
+          </ModalBody>
         </Modal>
       </div>
     );
