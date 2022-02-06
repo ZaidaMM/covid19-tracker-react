@@ -25,6 +25,7 @@ class CountryCard extends Component {
           <Card>
             <CardBody>
               <CardTitle tag='h5'>Coronavirus Cases</CardTitle>
+              <hr />
               <CardText>
                 <CasesStats
                   country={this.props.country}
@@ -36,6 +37,7 @@ class CountryCard extends Component {
           <Card>
             <CardBody>
               <CardTitle tag='h5'>Recovered</CardTitle>
+              <hr />
               <CardText>
                 <RecoveredStats
                   country={this.props.country}
@@ -47,6 +49,7 @@ class CountryCard extends Component {
           <Card>
             <CardBody>
               <CardTitle tag='h5'>Deaths</CardTitle>
+              <hr />
               <CardText>
                 <DeathsStats
                   country={this.props.country}

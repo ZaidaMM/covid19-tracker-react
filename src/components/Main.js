@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, FormGroup } from 'reactstrap';
 import { countries } from '../shared/data';
 import CountryCard from './CountryCard';
+import Sidebar from './Sidebar';
 
 class Main extends Component {
   constructor(props) {
@@ -31,30 +32,36 @@ class Main extends Component {
     });
 
     return (
-      <div class='Main'>
-        <div className='container py-3'>
-          <h3 className=' text-center'>Coronavirus Data by Country</h3>
-          <div className='row align-items-baseline '>
-            <div className='col-md-6'>
-              <h4 className='text-center offset-md-3'>{this.state.country}</h4>
+      <div className='Main'>
+        <div className='row m-4'>
+          <div className='col-8'>
+            <h3 className=' text-center'>Coronavirus Data by Country</h3>
+            <div className='row align-items-baseline '>
+              <div className='col-md-6'>
+                <h4 className='text-center offset-md-3'>
+                  {this.state.country}
+                </h4>
+              </div>
+              <Form className='col text-center'>
+                <FormGroup className='py-3'>
+                  <select
+                    id='selectCountry'
+                    name='selectCountry'
+                    className='col-7 mx-auto py-2'
+                    onChange={this.onCountryChange}
+                    value={this.state.country}
+                    key={this.state.country}
+                  >
+                    {countryList}
+                  </select>
+                </FormGroup>
+              </Form>
             </div>
-            <Form className='col text-center'>
-              <FormGroup className='py-3'>
-                <select
-                  id='selectCountry'
-                  name='selectCountry'
-                  className='col-7 mx-auto py-2'
-                  onChange={this.onCountryChange}
-                  value={this.state.country}
-                  key={this.state.country}
-                >
-                  {countryList}
-                </select>
-              </FormGroup>
-            </Form>
+            <CountryCard country={this.state.country} />
           </div>
-
-          <CountryCard country={this.state.country} />
+          <div className='col-3 mt-3 mt-md-2 align-items-end ml-auto'>
+            <Sidebar />
+          </div>
         </div>
       </div>
     );
