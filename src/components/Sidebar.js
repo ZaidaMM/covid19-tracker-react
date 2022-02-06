@@ -14,14 +14,12 @@ export class Sidebar extends Component {
       return (
         <tr>
           <td key={country.countryInfo.iso2}>{country.country}</td>
-          <td className='text-right' key={country.countryInfo.iso2}>
-            {country.todayCases}
-          </td>
+          <td className='text-right'>{country.todayCases}</td>
         </tr>
       );
     });
     return (
-      <div className='sidebar mx-auto'>
+      <div className='Sidebar mx-auto'>
         <div className='container table-card'>
           <Table striped hover bordered>
             <thead>

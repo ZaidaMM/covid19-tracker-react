@@ -34,7 +34,7 @@ class Main extends Component {
     return (
       <div className='Main'>
         <div className='row m-4'>
-          <div className='col-8'>
+          <div className='col-md-9 '>
             <h3 className=' text-center'>Coronavirus Data by Country</h3>
             <div className='row align-items-baseline '>
               <div className='col-md-6'>
@@ -59,7 +59,7 @@ class Main extends Component {
             </div>
             <CountryCard country={this.state.country} />
           </div>
-          <div className='col-3 mt-3 mt-md-2 align-items-end ml-auto'>
+          <div className='col-md-3 mt-2'>
             <Sidebar />
           </div>
         </div>

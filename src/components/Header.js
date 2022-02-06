@@ -10,6 +10,9 @@ import {
   NavLink,
   NavbarText,
   Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
 } from 'reactstrap';
 
 class Header extends Component {
@@ -17,9 +20,11 @@ class Header extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
 
     this.state = {
       isOpen: false,
+      isModalOpen: false,
     };
   }
 
@@ -28,10 +33,15 @@ class Header extends Component {
       isOpen: !this.state.isOpen,
     });
   }
+  toggleModal() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen,
+    });
+  }
 
   render() {
     return (
-      <div class='Header'>
+      <div className='Header'>
         <Jumbotron fluid className='my-0'>
           <h1 className='text-white offset-md-1 display-3 text-md-left text-center'>
             Covid-19 Tracker
@@ -71,12 +81,19 @@ class Header extends Component {
               <Button
                 className='btn btn-sm px-3 btn-register btn-purple ml-5'
                 type='button'
+                onClick={this.toggleModal}
               >
-                Register
+                Subscribe
               </Button>
             </NavbarText>
           </div>
         </Navbar>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+          <ModalHeader toggle={this.toggleModal}>
+            Subscribe for updates
+          </ModalHeader>
+          <ModalBody>BODY</ModalBody>
+        </Modal>
       </div>
     );
   }
