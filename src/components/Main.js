@@ -9,6 +9,8 @@ class Main extends Component {
     super(props);
 
     this.onCountryChange = this.onCountryChange.bind(this);
+    this.handleCountryList = this.handleCountryList.bind(this);
+    // this.numFormatter = this.numFormatter.bind(this);
     this.state = {
       country: 'Worldwide',
     };
@@ -26,11 +28,22 @@ class Main extends Component {
     event.preventDefault();
   }
 
-  render() {
-    const countryList = countries.map((country) => {
+  handleCountryList() {
+    return countries.map((country) => {
       return <option key={country.countryInfo.iso2}>{country.country}</option>;
     });
+  }
 
+  numFormatter(num) {
+    if (num > 999 && num < 1000000) {
+      return (num / 1000).toFixed(0) + 'k'; // convert to k for number from > 1000 < 1 million
+    } else if (num > 1000000) {
+      return (num / 1000000).toFixed(0) + 'm'; // convert to m for number from > 1 million
+    } else if (num < 900) {
+      return num; // if value < 1000, nothing to do
+    }
+  }
+  render() {
     return (
       <div className='Main'>
         <div className='row m-4'>
@@ -52,15 +65,19 @@ class Main extends Component {
                     value={this.state.country}
                     key={this.state.country}
                   >
-                    {countryList}
+                    {this.handleCountryList()}
                   </select>
                 </FormGroup>
               </Form>
             </div>
-            <CountryCard country={this.state.country} />
+            <CountryCard
+              country={this.state.country}
+              handleCountryList={this.handleCountryList}
+              numFormatter={this.numFormatter}
+            />
           </div>
           <div className='col-md-3 mt-2'>
-            <Sidebar />
+            <Sidebar numFormatter={this.numFormatter} />
           </div>
         </div>
       </div>

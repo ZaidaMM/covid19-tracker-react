@@ -2,22 +2,29 @@ import React, { Component } from 'react';
 import { countries } from '../shared/data';
 import { Table } from 'reactstrap';
 
-export class Sidebar extends Component {
+class Sidebar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {};
+    this.handleTable = this.handleTable.bind(this);
   }
 
+  handleTable() {
+    return countries
+      .sort((a, b) => b.todayCases - a.todayCases)
+      .map((country) => {
+        return (
+          <tr>
+            <td key={country.countryInfo.iso2}>{country.country}</td>
+            <td className='text-right'>
+              {this.props.numFormatter(country.todayCases)}
+            </td>
+          </tr>
+        );
+      });
+  }
   render() {
-    const dailyCases = countries.map((country) => {
-      return (
-        <tr>
-          <td key={country.countryInfo.iso2}>{country.country}</td>
-          <td className='text-right'>{country.todayCases}</td>
-        </tr>
-      );
-    });
     return (
       <div className='Sidebar mx-auto'>
         <div className='container table-card'>
@@ -28,7 +35,7 @@ export class Sidebar extends Component {
                 <th className='text-right ml-auto'>Coronavirus Daily Cases</th>
               </tr>
             </thead>
-            <tbody>{dailyCases}</tbody>
+            <tbody>{this.handleTable()}</tbody>
           </Table>
         </div>
       </div>
