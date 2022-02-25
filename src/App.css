@@ -25,6 +25,10 @@ body {
   border: 1px solid #007bff;
   transform: scale(1);
 }
+.icon:hover {
+  color: #007bff;
+  transform: scale(1);
+}
 .jumbotron {
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
     url('/public/assets/images/coronavirus.jpeg');
