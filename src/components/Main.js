@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup } from 'reactstrap';
+import { Form, FormGroup, Input } from 'reactstrap';
 import { countries } from '../shared/data';
 import CountryCard from './CountryCard';
 import Sidebar from './Sidebar';
@@ -8,31 +8,65 @@ class Main extends Component {
   constructor(props) {
     super(props);
 
-    this.onCountryChange = this.onCountryChange.bind(this);
-    this.handleCountryList = this.handleCountryList.bind(this);
-    // this.numFormatter = this.numFormatter.bind(this);
     this.state = {
-      country: 'Worldwide',
+      countryInput: 'Worldwide',
+      countryData: {},
+      countries: [],
+      country: '',
     };
+
+    this.onCountryChange = this.onCountryChange.bind(this);
   }
 
-  onCountryChange(event) {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-    const stats = this.setState({
-      country: value,
-    });
+  componentDidMount =
+    (() => {
+      fetch('https://disease.sh/v3/covid-19/all')
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({
+            countryData: data,
+          });
+        });
+    },
+    []);
 
-    console.log(value);
-    event.preventDefault();
-  }
+  getCountriesInfo =
+    (async () => {
+      await fetch('https://disease.sh/v3/covid-19/countries')
+        .then((response) => response.json())
+        .then((data) => {
+          const countries = data.map((country) => ({
+            name: country.country,
+            value: country.countryInfo.iso2,
+          }));
+          this.setState({
+            countries: countries,
+            country: countries.name,
+          });
+        });
+      this.getCountriesInfo();
+    },
+    []);
 
-  handleCountryList() {
-    return countries.map((country) => {
-      return <option key={country.countryInfo.iso2}>{country.country}</option>;
-    });
-  }
+  onCountryChange = async (event) => {
+    const countryName = event.target.value;
+    console.log(countryName);
+
+    const url =
+      countryName === 'worldwide'
+        ? 'https://disease.sh/v3/covid-19/all'
+        : `https://disease.sh/v3/covid-19/countries/${countryName}`;
+
+    await fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          countryInput: countryName,
+          countryData: data,
+        });
+      });
+    console.log(this.state.countryInput);
+  };
 
   numFormatter(num) {
     if (num > 999 && num < 1000000) {
@@ -52,32 +86,39 @@ class Main extends Component {
             <div className='row align-items-baseline '>
               <div className='col-md-6'>
                 <h4 className='text-center offset-md-3'>
-                  {this.state.country}
+                  {this.state.countryData.country}
                 </h4>
               </div>
               <Form className='col text-center'>
                 <FormGroup className='py-3'>
-                  <select
+                  <Input
+                    type='select'
                     id='selectCountry'
                     name='selectCountry'
                     className='col-7 mx-auto py-2'
                     onChange={this.onCountryChange}
-                    value={this.state.country}
-                    key={this.state.country}
+                    value={this.state.countries.name}
                   >
-                    {this.handleCountryList()}
-                  </select>
+                    <option value='worldwide'>Worldwide</option>
+                    {countries.map((country) => (
+                      <option value={country.countryInfo.iso2}>
+                        {country.country}
+                      </option>
+                    ))}
+                  </Input>
                 </FormGroup>
               </Form>
             </div>
             <CountryCard
-              country={this.state.country}
-              handleCountryList={this.handleCountryList}
+              countryData={this.state.countryData}
               numFormatter={this.numFormatter}
             />
           </div>
           <div className='col-md-3 mt-2'>
-            <Sidebar numFormatter={this.numFormatter} />
+            <Sidebar
+              numFormatter={this.numFormatter}
+              countryData={this.state.countryData}
+            />
           </div>
         </div>
       </div>

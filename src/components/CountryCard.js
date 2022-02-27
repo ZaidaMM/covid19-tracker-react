@@ -7,11 +7,16 @@ import DeathsStats from './DeathsStats';
 class CountryCard extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {};
   }
 
   render() {
+    console.log(this.props.countryData);
+    // console.log(this.props.country);
+
     return (
-      <div class='CountryCard'>
+      <div className='CountryCard'>
         <CardGroup className='text-center'>
           <Card>
             <CardBody>
@@ -19,7 +24,7 @@ class CountryCard extends Component {
               <hr />
               <CardText>
                 <CasesStats
-                  country={this.props.country}
+                  countryData={this.props.countryData}
                   numFormatter={this.props.numFormatter}
                 />
               </CardText>
@@ -31,7 +36,7 @@ class CountryCard extends Component {
               <hr />
               <CardText>
                 <RecoveredStats
-                  country={this.props.country}
+                  countryData={this.props.countryData}
                   numFormatter={this.props.numFormatter}
                 />
               </CardText>
@@ -43,7 +48,7 @@ class CountryCard extends Component {
               <hr />
               <CardText>
                 <DeathsStats
-                  country={this.props.country}
+                  countryData={this.props.countryData}
                   numFormatter={this.props.numFormatter}
                 />
               </CardText>
