@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { countries } from '../shared/data';
+// import { countries } from '../shared/data';
 import { Table } from 'reactstrap';
 import { Line } from 'react-chartjs-2';
 // import Chart from './Chart.js';
@@ -11,21 +11,19 @@ class Sidebar extends Component {
     this.state = {};
     this.handleTable = this.handleTable.bind(this);
   }
-
-  handleTable() {
-    return countries
-      .sort((a, b) => b.todayCases - a.todayCases)
-      .map((country) => {
-        return (
-          <tr>
-            <td key={country.countryInfo.iso2}>{country.country}</td>
-            <td className='text-right'>
-              {this.props.numFormatter(country.todayCases)}
-            </td>
-          </tr>
-        );
-      });
-  }
+  // .sort((a, b) => b.country.todayCases - a.country.todayCases)
+  handleTable = () => {
+    return this.props.countries.forEach((country) => {
+      return (
+        <tr>
+          <td key={country.value}>{country.name}</td>
+          <td className='text-right'>
+            {this.props.numFormatter(country.todayCases)}
+          </td>
+        </tr>
+      );
+    }, []);
+  };
   render() {
     return (
       <div className='Sidebar mx-auto'>

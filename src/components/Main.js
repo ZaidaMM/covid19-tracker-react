@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Input } from 'reactstrap';
-import { countries } from '../shared/data';
 import CountryCard from './CountryCard';
 import Sidebar from './Sidebar';
 
@@ -9,63 +8,57 @@ class Main extends Component {
     super(props);
 
     this.state = {
-      countryInput: 'Worldwide',
-      countryData: {},
       countries: [],
-      country: '',
+      CountriesLoaded: false,
+      countryData: {},
     };
-
-    this.onCountryChange = this.onCountryChange.bind(this);
   }
 
-  componentDidMount =
-    (() => {
-      fetch('https://disease.sh/v3/covid-19/all')
-        .then((response) => response.json())
-        .then((data) => {
-          this.setState({
-            countryData: data,
-          });
+  componentDidMount() {
+    fetch('https://disease.sh/v3/covid-19/countries')
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          countries: json,
+          CountriesLoaded: true,
         });
-    },
-    []);
+        console.log(this.state.countries);
+      }, []);
+  }
 
-  getCountriesInfo =
-    (async () => {
-      await fetch('https://disease.sh/v3/covid-19/countries')
-        .then((response) => response.json())
-        .then((data) => {
-          const countries = data.map((country) => ({
-            name: country.country,
-            value: country.countryInfo.iso2,
-          }));
-          this.setState({
-            countries: countries,
-            country: countries.name,
-          });
+  getCountriesInfo() {
+    fetch('https://disease.sh/v3/covid-19/countries')
+      .then((res) => res.json())
+      .then((json) => {
+        const countries = json.map((country) => ({
+          name: country.country,
+          value: country.countryInfo.iso2,
+        }));
+
+        this.setState({
+          countries: json,
+          CountriesLoaded: true,
         });
-      this.getCountriesInfo();
-    },
-    []);
+        console.log(this.state.countries);
+      }, []);
+  }
 
-  onCountryChange = async (event) => {
-    const countryName = event.target.value;
-    console.log(countryName);
+  onCountryChange = (event) => {
+    const countryCode = event.target.value;
+    console.log(countryCode);
 
     const url =
-      countryName === 'worldwide'
+      countryCode === 'worldwide'
         ? 'https://disease.sh/v3/covid-19/all'
-        : `https://disease.sh/v3/covid-19/countries/${countryName}`;
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
 
-    await fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => {
         this.setState({
-          countryInput: countryName,
-          countryData: data,
+          countryData: json,
         });
       });
-    console.log(this.state.countryInput);
   };
 
   numFormatter(num) {
@@ -91,21 +84,23 @@ class Main extends Component {
               </div>
               <Form className='col text-center'>
                 <FormGroup className='py-3'>
-                  <Input
-                    type='select'
+                  <select
+                    // type='select'
                     id='selectCountry'
-                    name='selectCountry'
+                    name='select'
                     className='col-7 mx-auto py-2'
                     onChange={this.onCountryChange}
-                    value={this.state.countries.name}
+                    value={this.state.countries.country}
                   >
                     <option value='worldwide'>Worldwide</option>
-                    {countries.map((country) => (
-                      <option value={country.countryInfo.iso2}>
-                        {country.country}
-                      </option>
-                    ))}
-                  </Input>
+                    {this.state.countries.map((country) => {
+                      return (
+                        <option value={country.countryInfo.iso2}>
+                          {country.country}
+                        </option>
+                      );
+                    })}
+                  </select>
                 </FormGroup>
               </Form>
             </div>
@@ -115,10 +110,10 @@ class Main extends Component {
             />
           </div>
           <div className='col-md-3 mt-2'>
-            <Sidebar
+            {/* <Sidebar
               numFormatter={this.numFormatter}
               countryData={this.state.countryData}
-            />
+            /> */}
           </div>
         </div>
       </div>
