@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { countries } from '../shared/data';
 import { Table } from 'reactstrap';
 import { Line } from 'react-chartjs-2';
 // import Chart from './Chart.js';
@@ -8,22 +7,25 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
     this.handleTable = this.handleTable.bind(this);
   }
-  // .sort((a, b) => b.country.todayCases - a.country.todayCases)
+
   handleTable = () => {
-    return this.props.countries.forEach((country) => {
-      return (
-        <tr>
-          <td key={country.value}>{country.name}</td>
-          <td className='text-right'>
-            {this.props.numFormatter(country.todayCases)}
-          </td>
-        </tr>
-      );
-    }, []);
+    console.log(this.props.countries);
+    return this.props.countries
+      .sort((a, b) => b.cases - a.cases)
+      .map((country) => {
+        return (
+          <tr>
+            <td key={country.countryInfo.iso2}>{country.country}</td>
+            <td className='text-right'>
+              {this.props.numFormatter(country.cases)}
+            </td>
+          </tr>
+        );
+      });
   };
+
   render() {
     return (
       <div className='Sidebar mx-auto'>
@@ -34,7 +36,7 @@ class Sidebar extends Component {
                 <tr>
                   <th>Country</th>
                   <th className='text-right ml-auto'>
-                    Coronavirus Daily Cases
+                    Coronavirus Cases by Country
                   </th>
                 </tr>
               </thead>

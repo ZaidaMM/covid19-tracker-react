@@ -11,11 +11,12 @@ class Main extends Component {
       countries: [],
       CountriesLoaded: false,
       countryData: {},
+      tableData: [],
     };
   }
 
-  componentDidMount() {
-    fetch('https://disease.sh/v3/covid-19/countries')
+  componentDidMount = async () => {
+    await fetch('https://disease.sh/v3/covid-19/countries')
       .then((res) => res.json())
       .then((json) => {
         this.setState({
@@ -24,9 +25,9 @@ class Main extends Component {
         });
         console.log(this.state.countries);
       }, []);
-  }
+  };
 
-  getCountriesInfo() {
+  getCountriesInfo = async () => {
     fetch('https://disease.sh/v3/covid-19/countries')
       .then((res) => res.json())
       .then((json) => {
@@ -38,12 +39,13 @@ class Main extends Component {
         this.setState({
           countries: json,
           CountriesLoaded: true,
+          tableData: json,
         });
         console.log(this.state.countries);
       }, []);
-  }
+  };
 
-  onCountryChange = (event) => {
+  onCountryChange = async (event) => {
     const countryCode = event.target.value;
     console.log(countryCode);
 
@@ -52,7 +54,7 @@ class Main extends Component {
         ? 'https://disease.sh/v3/covid-19/all'
         : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
 
-    fetch(url)
+    await fetch(url)
       .then((res) => res.json())
       .then((json) => {
         this.setState({
@@ -110,10 +112,10 @@ class Main extends Component {
             />
           </div>
           <div className='col-md-3 mt-2'>
-            {/* <Sidebar
+            <Sidebar
               numFormatter={this.numFormatter}
-              countryData={this.state.countryData}
-            /> */}
+              countries={this.state.countries}
+            />
           </div>
         </div>
       </div>
